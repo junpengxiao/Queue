@@ -47,4 +47,6 @@ func (this *queue) Peek() (interface{}, error) {
 	return this.buf[this.h], nil
 }
 
-	
+func (this *queue) Length() int {
+	return this.count
+}
