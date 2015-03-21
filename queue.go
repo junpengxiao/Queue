@@ -23,21 +23,22 @@ func (this *queue) Push(data interface{}) error {
 	if this.count == this.size {
 		return ErrQueueFull
 	}
-	this.count++
 	this.buf[(this.h+this.count)%this.size] = data
+	this.count++
 	return nil
 }
 
 func (this *queue) Pop() (interface{},error) {
-	rect,err := this.Peek()
-	if this.count > 0 {
+	if rect,err := this.Peek(); err == nil {
 		this.h++
 		if this.h == this.size {
 			this.h = 0
 		}
 		this.count--
+		return rect, err
+	} else {
+		return rect, err
 	}
-	return rect, err
 }
 
 func (this *queue) Peek() (interface{}, error) {
